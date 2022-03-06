@@ -175,6 +175,25 @@ public class GamePanel extends JPanel implements ActionListener{
                             direction='D';
                         }
                         break;
+                case KeyEvent.VK_ENTER:
+                    if(!running){
+                        running= true;
+                        applesEaten=0;
+                        bodyParts=6;
+                        for (int i = 0; i < bodyParts; i++)
+                        {
+                            x[i]=0;
+                            y[i]=0;
+                        }
+                        direction ='R';
+                        timer.start();
+                        newApple();
+                        move();
+                        checkApple();
+                        checkCollisons();
+                        repaint();
+                    }
+                    break;
                 }
         }
     }
