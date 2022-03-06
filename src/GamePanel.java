@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
+import java.io.File;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener{
@@ -28,6 +32,7 @@ public class GamePanel extends JPanel implements ActionListener{
         StartGame();
     }
     public void StartGame () {
+        playMusic("GTASAN.wav");
         newApple();
         running=true;
         timer=new Timer(DELAY,this);
@@ -171,6 +176,23 @@ public class GamePanel extends JPanel implements ActionListener{
                         }
                         break;
                 }
+        }
+    }
+    public void playMusic(String musiclocation){
+        try{
+            File musicPath = new File(musiclocation);
+            if(musicPath.exists()){
+                AudioInputStream audioInput= AudioSystem.getAudioInputStream(musicPath);
+                Clip clip=AudioSystem.getClip();
+                clip.open(audioInput);
+                clip.start();
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
+            else{
+                System.out.println("Cannot find the Audio File");
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 }
