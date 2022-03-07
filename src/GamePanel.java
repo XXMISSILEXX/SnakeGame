@@ -189,7 +189,6 @@ public class GamePanel extends JPanel implements ActionListener{
                         }
                         direction ='R';
                         timer.start();
-                        newApple();
                         move();
                         checkApple();
                         checkCollisons();
