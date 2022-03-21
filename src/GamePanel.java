@@ -11,16 +11,16 @@ public class GamePanel extends JPanel implements ActionListener{
     static final int SCREEN_WIDTH = 1280;
     static final int SCREEN_HEIGHT = 720;
     static final int UNIT_SIZE = 30;
-    static final int GAME_UNIT = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
+    static final int GAME_UNIT = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;//tong so o cua ma tran
     static final int DELAY = 75;
     final int x[] = new int[GAME_UNIT];
     final int y[] = new int[GAME_UNIT];
-    int bodyParts = 6;
-    int applesEaten;
-    int appleX;
-    int appleY;
-    char direction = 'R';
-    boolean running = false;
+    int bodyParts = 6; //chieu dai ran ban dau
+    int applesEaten;//so tao da an
+    int appleX;//toa do cua tao theo truc x
+    int appleY;//toa do cua tao theo truc y
+    char direction = 'R';//huong di cua ran
+    boolean running = false;//check chuong trinh dang chay hay dung
     Timer timer;
     Random random;
     GamePanel() {
@@ -35,11 +35,11 @@ public class GamePanel extends JPanel implements ActionListener{
         playMusic("GTASAN.wav");
         newApple();
         running=true;
-        timer=new Timer(DELAY,this);
+        timer=new Timer(DELAY,this); // để chạy chương trình với delay 75
         timer.start();
     }
     public void paintComponent (Graphics g) {
-        super.paintComponent(g);
+        super.paintComponent(g); // dùng để reset khung hình khi rắn di chuyển
         draw(g);
     }
     public void draw (Graphics g) {
@@ -57,7 +57,6 @@ public class GamePanel extends JPanel implements ActionListener{
                     g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 }
                 else {
-                    g.setColor(new Color(45, 180, 0));
                     g.setColor(new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255)));
                     g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 }
@@ -150,7 +149,7 @@ public class GamePanel extends JPanel implements ActionListener{
             checkApple();
             checkCollisons();
         }
-        repaint();
+        repaint(); // dùng để reset khung hình khi chương trình chạy
     }
 
     public class MyKeyAdapter extends KeyAdapter{
@@ -192,7 +191,6 @@ public class GamePanel extends JPanel implements ActionListener{
                         move();
                         checkApple();
                         checkCollisons();
-                        repaint();
                     }
                     break;
                 }

@@ -9,7 +9,7 @@ public class GameFrame extends JFrame implements ActionListener{
     JButton resetButton;
     GameFrame () {
         this.setContentPane(new JLabel(new ImageIcon("sng.jpg")));
-        this.setLayout(new FlowLayout());
+//        this.setLayout(new FlowLayout());
         this.L1 = new JLabel();
         this.add(L1);
         this.setSize(500,500);
@@ -25,13 +25,6 @@ public class GameFrame extends JFrame implements ActionListener{
         this.btnStart.setText("Start");
         this.btnStart.addActionListener(this);
         this.setResizable(false);
-//        this.add(new GamePanel());
-//        this.setTitle("Snake");
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.setResizable(false);
-//        this.pack();
-//        this.setVisible(true);
-//        this.setLocationRelativeTo(null);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
