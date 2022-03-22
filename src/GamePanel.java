@@ -101,25 +101,25 @@ public class GamePanel extends JPanel implements ActionListener{
         }
     }
     public void checkCollisons(){
-        // If head collies with body
+        // rắn đâm vào thân
         for (int i=bodyParts;i>0;i--) {
             if ((x[0] == x[i]) && (y[0] == y[i])) {
                 running = false;
             }
         }
-        // If head touches left border
+        // đầu rắn đâm vào tường bên trái
         if (x[0] < 0) {
             running = false;
         }
-        // If head touches right border
+        // đầu rắn đâm vào tường bên phải
         if (x[0] > SCREEN_WIDTH) {
             running = false;
         }
-        // If head touches top border
+        // đầu rắn đâm vào tường phía trên
         if (y[0] < 0) {
             running = false;
         }
-        // If head touches bottom border
+        // đầu rắn đâm vào tường phía dưới
         if (y[0] > SCREEN_HEIGHT) {
             running = false;
         }
@@ -139,6 +139,8 @@ public class GamePanel extends JPanel implements ActionListener{
         g.setFont( new Font("Ink Free",Font.BOLD,75));
         FontMetrics metrics2= getFontMetrics(g.getFont());
         g.drawString("Game Over",(SCREEN_WIDTH -metrics2.stringWidth("Game Over"))/2,SCREEN_HEIGHT/2);
+
+        //Press Enter to restart game
         g.setColor(Color.green);
         g.drawString("Press Enter to restart game",(SCREEN_WIDTH -metrics2.stringWidth("Press Enter to restart game")-120),SCREEN_HEIGHT-200);
     }
