@@ -32,21 +32,58 @@ public class GameFrame extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==About){
             JFrame jf=new JFrame();
-            jf.setSize(500,500);
+            jf.setSize(1000,600);
             jf.setVisible(true);
             jf.setTitle("About");
             jf.setLayout(null);
             jf.setLocationRelativeTo(null);
-//            jf.setContentPane(new JLabel("Tran Trung Hieu-2012101208Le Hong Phong-201200271"));
-//            JLabel j1=new JLabel("Tran Trung Hieu-2012101208");
-//            jf.add(j1);
-            JLabel label=new JLabel();
-            label.setText("Tran Trung Hieu");
-            label.setAlignmentX(0);
-            label.setAlignmentY(0);
-            label.setForeground(Color.red);
-            jf.add(label);
-            
+
+            JLabel jLabel1 = new JLabel();
+            jLabel1.setText("Thanh vien trong nhom");
+            jLabel1.setBounds(120,50,500,30);
+            jLabel1.setFont(new Font("Serif",Font.PLAIN,20));
+            jf.add(jLabel1);
+            JLabel jLabel2 = new JLabel();
+            jLabel2.setText("Tran Trung Hieu");
+            jLabel2.setBounds(120,70,500,30);
+            jLabel2.setFont(new Font("Serif",Font.PLAIN,20));
+            jf.add(jLabel2);
+            JLabel jLabel3 = new JLabel();
+            jLabel3.setText("Le Hong Phong - 201200271");
+            jLabel3.setBounds(120,90,500,30);
+            jLabel3.setFont(new Font("Serif",Font.PLAIN,20));
+            jf.add(jLabel3);
+            JLabel jLabel4 = new JLabel();
+            jLabel4.setText("Qua nghiên cứu và tìm hiểu ta nhận thấy game Rắn săn mồi là game cổ điện xuất hiện vào năm");
+            jLabel4.setBounds(120,200,1000,30);
+            jLabel4.setFont(new Font("Serif",Font.PLAIN,20));
+            jf.add(jLabel4);
+            JLabel jLabel5 = new JLabel();
+            jLabel5.setText("1997 trên Nokia 6610 là những ô vuông xếp liên tiếp nhau di chuyển trên, một màn hình màu");
+            jLabel5.setBounds(120,220,1000,30);
+            jLabel5.setFont(new Font("Serif",Font.PLAIN,20));
+            jf.add(jLabel5);
+            JLabel jLabel6 = new JLabel();
+            jLabel6.setText("xanh đơn giản nhưng Rắn săn mồi đã xây dựng rất thành công tên tuổi của mình. Với 400 bản");
+            jLabel6.setBounds(120,240,1000,30);
+            jLabel6.setFont(new Font("Serif",Font.PLAIN,20));
+            jf.add(jLabel6);
+            JLabel jLabel7 = new JLabel();
+            jLabel7.setText("được xuất xưởng và đến hiện tại đã là phiên bản thứ 8.Game có sự hấp đẫn đối với người chơi.");
+            jLabel7.setBounds(120,260,1000,30);
+            jLabel7.setFont(new Font("Serif",Font.PLAIN,20));
+            jf.add(jLabel7);
+            JLabel jLabel8 = new JLabel();
+            jLabel8.setText("Do đó nhóm em quyết định xây dựng game dựa trên những ý tưởng từ xưa cũ nhưng chưa bao giờ");
+            jLabel8.setBounds(120,280,1000,30);
+            jLabel8.setFont(new Font("Serif",Font.PLAIN,20));
+            jf.add(jLabel8);
+            JLabel jLabel9 = new JLabel();
+            jLabel9.setText("là mất đi chất của tựa game dã tạo nên tuổi thơ của một thế hệ.");
+            jLabel9.setBounds(120,300,1000,30);
+            jLabel9.setFont(new Font("Serif",Font.PLAIN,20));
+            jf.add(jLabel9);
+
         }
         if (e.getSource()==btnStart) {
             this.setVisible(false);
@@ -64,15 +101,12 @@ public class GameFrame extends JFrame implements ActionListener{
             JMenu HelpMenu =new JMenu("Help");
             JMenu LeaderBoardMenu =new JMenu("LeaderBoard");
 
-
             About.addActionListener(this);
-
             HelpMenu.add(About);
             menuBar.add(fileMenu);
             menuBar.add(HelpMenu);
             menuBar.add(LeaderBoardMenu);
             jFrame.setJMenuBar(menuBar);
-
         }
     }
 }
