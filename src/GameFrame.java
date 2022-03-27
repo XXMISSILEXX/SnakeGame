@@ -1,20 +1,23 @@
 import org.w3c.dom.Text;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Vector;
 
 public class GameFrame extends JFrame implements ActionListener{
     JButton btnStart;
     JLabel L1;
     JButton SubmitNameButton;
     JMenuItem About=new JMenuItem("About");
+    JMenuItem ShowLeaderBoard = new JMenuItem("Show Leader Board");
     JLabel ten = new JLabel("Name");
+    String url = "jdbc:mysql://localhost:3306/playersnake";
+    String user = "root";
+    String password = "";
     GameFrame () {
         this.setContentPane(new JLabel(new ImageIcon("sng.jpg")));
         this.L1 = new JLabel();
@@ -35,6 +38,57 @@ public class GameFrame extends JFrame implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==btnStart) {
+            this.setVisible(false);
+            JFrame jFrame = new JFrame();
+            jFrame.add(new GamePanel());
+            jFrame.setTitle("Snake");
+            jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            jFrame.setResizable(false);
+            jFrame.pack();
+            jFrame.setVisible(true);
+            jFrame.setLocationRelativeTo(null);
+
+            JMenuBar menuBar = new JMenuBar();
+            JMenu fileMenu = new JMenu("File");
+            JMenu HelpMenu = new JMenu("Help");
+            JMenu LeaderBoardMenu = new JMenu("LeaderBoard");
+            HelpMenu.add(About);
+            About.addActionListener(this);
+            LeaderBoardMenu.add(ShowLeaderBoard);
+            ShowLeaderBoard.addActionListener(this);
+            menuBar.add(fileMenu);
+            menuBar.add(HelpMenu);
+            menuBar.add(LeaderBoardMenu);
+            jFrame.setJMenuBar(menuBar);
+        }
+        if (e.getSource()==ShowLeaderBoard) {
+            String []data = new String[100];
+            var sql = "select * from playersnakegame";
+            try (Connection conn = DriverManager.getConnection(url,user,password)) {
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                JTable jTable = new JTable();
+                jTable.removeAll();
+                String [] arr = {"Ten","Diem"};
+                DefaultTableModel model = new DefaultTableModel(arr,0);
+                while (resultSet.next()) {
+                    Vector vec = new Vector();
+                    vec.add(resultSet.getString("Ten"));
+                    vec.add(resultSet.getString("Diem"));
+                    model.addRow(vec);
+                }
+                jTable.setModel(model);
+                JFrame leaderBoard = new JFrame();
+                leaderBoard.add(jTable);
+                leaderBoard.setVisible(true);
+                leaderBoard.setSize(600,600);
+                leaderBoard.setLocationRelativeTo(null);
+                leaderBoard.setResizable(false);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         if(e.getSource()==About){
             JFrame jf=new JFrame();
             jf.setSize(1000,600);
@@ -42,6 +96,7 @@ public class GameFrame extends JFrame implements ActionListener{
             jf.setTitle("About");
             jf.setLayout(null);
             jf.setLocationRelativeTo(null);
+            jf.setResizable(false);
 
             JLabel jLabel1 = new JLabel();
             jLabel1.setText("Thành viên trong nhóm");
@@ -62,29 +117,6 @@ public class GameFrame extends JFrame implements ActionListener{
             jLabel.setBounds(120,115,500,400);
             jLabel.setFont(new Font("Serif",Font.PLAIN,20));
             jf.add(jLabel);
-        }
-        if (e.getSource()==btnStart) {
-            this.setVisible(false);
-            JFrame jFrame = new JFrame();
-            jFrame.add(new GamePanel());
-            jFrame.setTitle("Snake");
-            jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            jFrame.setResizable(false);
-            jFrame.pack();
-            jFrame.setVisible(true);
-            jFrame.setLocationRelativeTo(null);
-
-            JMenuBar menuBar = new JMenuBar();
-            JMenu fileMenu = new JMenu("File");
-            JMenu HelpMenu = new JMenu("Help");
-            JMenu LeaderBoardMenu = new JMenu("LeaderBoard");
-
-            About.addActionListener(this);
-            HelpMenu.add(About);
-            menuBar.add(fileMenu);
-            menuBar.add(HelpMenu);
-            menuBar.add(LeaderBoardMenu);
-            jFrame.setJMenuBar(menuBar);
         }
     }
 }

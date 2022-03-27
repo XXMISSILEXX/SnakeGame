@@ -28,12 +28,12 @@ public class GamePanel extends JPanel implements ActionListener{
     Timer timer;
     Random random;
     JButton SubmitNameButton;
+    JTextField InsertName;
+    JFrame InsertFrame;
     String url = "jdbc:mysql://localhost:3306/PlayerSnake";
     String user = "root";
     String password = "";
     String sql = "INSERT INTO playersnakegame (Ten,Diem) VALUES (?,?);";
-    JTextField InsertName;
-    JFrame jFrame;
     GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
@@ -77,27 +77,41 @@ public class GamePanel extends JPanel implements ActionListener{
                 g.drawString("Score : "+applesEaten,(SCREEN_WIDTH - metrics.stringWidth("Score : "+applesEaten))/2,g.getFont().getSize());
         }
         else {
-            InsertNameframe();
             gameover(g);
+            InsertNameframe();
         }
     }
     public void InsertNameframe () {
-        jFrame = new JFrame();
-        jFrame.setSize(300,250);
-        jFrame.setLayout(null);
+        InsertFrame = new JFrame();
+        InsertFrame.setSize(300,250);
+        InsertFrame.setLayout(null);
         JLabel NamePlayer = new JLabel("Player's Name");
         NamePlayer.setBounds(15,30,150,30);
-        jFrame.add(NamePlayer);
+        InsertFrame.add(NamePlayer);
         InsertName = new JTextField();
         InsertName.setBounds(110,30,150,30);
-        jFrame.add(InsertName);
+        InsertFrame.add(InsertName);
         SubmitNameButton = new JButton("Submit");
         SubmitNameButton.setBounds(100,100,100,50);
-        SubmitNameButton.addActionListener(this);
-        jFrame.add(SubmitNameButton);
-        jFrame.setResizable(false);
-        jFrame.setLocationRelativeTo(null);
-        jFrame.setVisible(true);
+        InsertFrame.add(SubmitNameButton);
+        SubmitNameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource()==SubmitNameButton) {
+                    if (InsertName.getText().isEmpty()) {
+                        JOptionPane checkEmpty = new JOptionPane();
+                        checkEmpty.showMessageDialog(InsertFrame,"Player's Name did not empty");
+                    }
+                    else {
+                        InsertMySql();
+                        InsertFrame.setVisible(false);
+                    }
+                }
+            }
+        });
+        InsertFrame.setResizable(false);
+        InsertFrame.setLocationRelativeTo(null);
+        InsertFrame.setVisible(true);
     }
     public void newApple() {
         appleX=  random.nextInt((int)SCREEN_WIDTH/UNIT_SIZE)*UNIT_SIZE;
@@ -192,18 +206,7 @@ public class GamePanel extends JPanel implements ActionListener{
             checkCollisons();
             repaint();// dùng để reset khung hình khi chương trình chạy
         }
-        if (e.getSource()==SubmitNameButton) {
-            if (InsertName.getText().isEmpty()) {
-                JOptionPane checkEmpty = new JOptionPane();
-                checkEmpty.showMessageDialog(jFrame,"Player's Name did not empty");
-            }
-            else {
-            InsertMySql();
-            jFrame.setVisible(false);
-            }
-        }
     }
-
     public class MyKeyAdapter extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e){
