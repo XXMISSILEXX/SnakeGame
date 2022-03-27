@@ -1,16 +1,22 @@
+import org.w3c.dom.Text;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class GameFrame extends JFrame implements ActionListener{
     JButton btnStart;
     JLabel L1;
-    JButton resetButton;
+    JButton SubmitNameButton;
     JMenuItem About=new JMenuItem("About");
+    JLabel ten = new JLabel("Name");
     GameFrame () {
         this.setContentPane(new JLabel(new ImageIcon("sng.jpg")));
-//        this.setLayout(new FlowLayout());
         this.L1 = new JLabel();
         this.add(L1);
         this.setSize(500,500);
@@ -26,7 +32,6 @@ public class GameFrame extends JFrame implements ActionListener{
         this.btnStart.setText("Start");
         this.btnStart.addActionListener(this);
         this.setResizable(false);
-
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -39,17 +44,17 @@ public class GameFrame extends JFrame implements ActionListener{
             jf.setLocationRelativeTo(null);
 
             JLabel jLabel1 = new JLabel();
-            jLabel1.setText("Thanh vien trong nhom");
+            jLabel1.setText("Thành viên trong nhóm");
             jLabel1.setBounds(120,50,500,30);
             jLabel1.setFont(new Font("Serif",Font.PLAIN,20));
             jf.add(jLabel1);
             JLabel jLabel2 = new JLabel();
-            jLabel2.setText("Tran Trung Hieu");
+            jLabel2.setText("Trần Trung Hiếu - 201210128");
             jLabel2.setBounds(120,70,500,30);
             jLabel2.setFont(new Font("Serif",Font.PLAIN,20));
             jf.add(jLabel2);
             JLabel jLabel3 = new JLabel();
-            jLabel3.setText("Le Hong Phong - 201200271");
+            jLabel3.setText("Lê Hồng Phong - 201200271");
             jLabel3.setBounds(120,90,500,30);
             jLabel3.setFont(new Font("Serif",Font.PLAIN,20));
             jf.add(jLabel3);
@@ -83,7 +88,6 @@ public class GameFrame extends JFrame implements ActionListener{
             jLabel9.setBounds(120,300,1000,30);
             jLabel9.setFont(new Font("Serif",Font.PLAIN,20));
             jf.add(jLabel9);
-
         }
         if (e.getSource()==btnStart) {
             this.setVisible(false);
@@ -96,10 +100,10 @@ public class GameFrame extends JFrame implements ActionListener{
             jFrame.setVisible(true);
             jFrame.setLocationRelativeTo(null);
 
-            JMenuBar menuBar=new JMenuBar();
-            JMenu fileMenu =new JMenu("File");
-            JMenu HelpMenu =new JMenu("Help");
-            JMenu LeaderBoardMenu =new JMenu("LeaderBoard");
+            JMenuBar menuBar = new JMenuBar();
+            JMenu fileMenu = new JMenu("File");
+            JMenu HelpMenu = new JMenu("Help");
+            JMenu LeaderBoardMenu = new JMenu("LeaderBoard");
 
             About.addActionListener(this);
             HelpMenu.add(About);

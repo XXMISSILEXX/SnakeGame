@@ -5,6 +5,10 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener{
@@ -23,6 +27,13 @@ public class GamePanel extends JPanel implements ActionListener{
     boolean running = false;//check chuong trinh dang chay hay dung
     Timer timer;
     Random random;
+    JButton SubmitNameButton;
+    String url = "jdbc:mysql://localhost:3306/PlayerSnake";
+    String user = "root";
+    String password = "";
+    String sql = "INSERT INTO playersnakegame (Ten,Diem) VALUES (?,?);";
+    JTextField InsertName;
+    JFrame jFrame;
     GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
@@ -66,8 +77,27 @@ public class GamePanel extends JPanel implements ActionListener{
                 g.drawString("Score : "+applesEaten,(SCREEN_WIDTH - metrics.stringWidth("Score : "+applesEaten))/2,g.getFont().getSize());
         }
         else {
+            InsertNameframe();
             gameover(g);
         }
+    }
+    public void InsertNameframe () {
+        jFrame = new JFrame();
+        jFrame.setSize(300,250);
+        jFrame.setLayout(null);
+        JLabel NamePlayer = new JLabel("Player's Name");
+        NamePlayer.setBounds(15,30,150,30);
+        jFrame.add(NamePlayer);
+        InsertName = new JTextField();
+        InsertName.setBounds(110,30,150,30);
+        jFrame.add(InsertName);
+        SubmitNameButton = new JButton("Submit");
+        SubmitNameButton.setBounds(100,100,100,50);
+        SubmitNameButton.addActionListener(this);
+        jFrame.add(SubmitNameButton);
+        jFrame.setResizable(false);
+        jFrame.setLocationRelativeTo(null);
+        jFrame.setVisible(true);
     }
     public void newApple() {
         appleX=  random.nextInt((int)SCREEN_WIDTH/UNIT_SIZE)*UNIT_SIZE;
@@ -127,6 +157,17 @@ public class GamePanel extends JPanel implements ActionListener{
             timer.stop();
         }
     }
+    public void InsertMySql () {
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1,InsertName.getText());
+            System.out.println(InsertName.getText());
+            preparedStatement.setInt(2, applesEaten);
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
     public void gameover(Graphics g){
         //Score
         g.setColor(Color.red);
@@ -150,8 +191,12 @@ public class GamePanel extends JPanel implements ActionListener{
             move();
             checkApple();
             checkCollisons();
+            repaint();// dùng để reset khung hình khi chương trình chạy
         }
-        repaint(); // dùng để reset khung hình khi chương trình chạy
+        if (e.getSource()==SubmitNameButton) {
+            InsertMySql();
+            jFrame.setVisible(false);
+        }
     }
 
     public class MyKeyAdapter extends KeyAdapter{
