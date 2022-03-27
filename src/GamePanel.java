@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener{
     static final int SCREEN_WIDTH = 1280;
-    static final int SCREEN_HEIGHT = 720;
+    static final int SCREEN_HEIGHT = 800;
     static final int UNIT_SIZE = 30;
     static final int GAME_UNIT = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;//tong so o cua ma tran
     static final int DELAY = 75;
@@ -161,7 +161,6 @@ public class GamePanel extends JPanel implements ActionListener{
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1,InsertName.getText());
-            System.out.println(InsertName.getText());
             preparedStatement.setInt(2, applesEaten);
             preparedStatement.execute();
         } catch (SQLException throwables) {
@@ -194,8 +193,14 @@ public class GamePanel extends JPanel implements ActionListener{
             repaint();// dùng để reset khung hình khi chương trình chạy
         }
         if (e.getSource()==SubmitNameButton) {
+            if (InsertName.getText().isEmpty()) {
+                JOptionPane checkEmpty = new JOptionPane();
+                checkEmpty.showMessageDialog(jFrame,"Player's Name did not empty");
+            }
+            else {
             InsertMySql();
             jFrame.setVisible(false);
+            }
         }
     }
 
