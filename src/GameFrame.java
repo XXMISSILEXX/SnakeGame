@@ -27,6 +27,20 @@ public class GameFrame extends JFrame implements ActionListener{
         this.btnStart.setBounds(200,300,100,50);
         this.setTitle("Snake");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        JMenu HelpMenu = new JMenu("Help");
+        JMenu LeaderBoardMenu = new JMenu("LeaderBoard");
+        HelpMenu.add(About);
+        About.addActionListener(this);
+        LeaderBoardMenu.add(ShowLeaderBoard);
+        ShowLeaderBoard.addActionListener(this);
+        menuBar.add(fileMenu);
+        menuBar.add(HelpMenu);
+        menuBar.add(LeaderBoardMenu);
+        this.setJMenuBar(menuBar);
+
         this.setLayout(null);
         this.setSize(500,500);
         this.setVisible(true);
@@ -49,18 +63,18 @@ public class GameFrame extends JFrame implements ActionListener{
             jFrame.setVisible(true);
             jFrame.setLocationRelativeTo(null);
 
-            JMenuBar menuBar = new JMenuBar();
-            JMenu fileMenu = new JMenu("File");
-            JMenu HelpMenu = new JMenu("Help");
-            JMenu LeaderBoardMenu = new JMenu("LeaderBoard");
-            HelpMenu.add(About);
-            About.addActionListener(this);
-            LeaderBoardMenu.add(ShowLeaderBoard);
-            ShowLeaderBoard.addActionListener(this);
-            menuBar.add(fileMenu);
-            menuBar.add(HelpMenu);
-            menuBar.add(LeaderBoardMenu);
-            jFrame.setJMenuBar(menuBar);
+//            JMenuBar menuBar = new JMenuBar();
+//            JMenu fileMenu = new JMenu("File");
+//            JMenu HelpMenu = new JMenu("Help");
+//            JMenu LeaderBoardMenu = new JMenu("LeaderBoard");
+//            HelpMenu.add(About);
+//            About.addActionListener(this);
+//            LeaderBoardMenu.add(ShowLeaderBoard);
+//            ShowLeaderBoard.addActionListener(this);
+//            menuBar.add(fileMenu);
+//            menuBar.add(HelpMenu);
+//            menuBar.add(LeaderBoardMenu);
+//            jFrame.setJMenuBar(menuBar);
         }
         if (e.getSource()==ShowLeaderBoard) {
             String []data = new String[100];
@@ -72,6 +86,8 @@ public class GameFrame extends JFrame implements ActionListener{
                 jTable.removeAll();
                 String [] arr = {"Ten","Diem"};
                 DefaultTableModel model = new DefaultTableModel(arr,0);
+                String []Colum = {"Name Player","Score"};
+                model.addRow(Colum);
                 while (resultSet.next()) {
                     Vector vec = new Vector();
                     vec.add(resultSet.getString("Ten"));
