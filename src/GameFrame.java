@@ -96,7 +96,7 @@ public class GameFrame extends JFrame implements ActionListener{
                     model.addRow(vec);
                 }
                 jTable.setModel(model);
-                JFrame leaderBoard = new JFrame();
+                JFrame leaderBoard = new JFrame("Leader Board");
                 leaderBoard.add(jTable);
                 leaderBoard.setVisible(true);
                 leaderBoard.setSize(600,600);
